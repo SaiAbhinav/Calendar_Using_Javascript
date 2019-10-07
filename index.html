@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Calendar</title>
+		<link rel="stylesheet" href="styles.css" />
+	</head>
+	<body onload="renderCalendar()">
+		<h2 id="current_month"></h2>
+		<p id="current_date_stamp"></p>
+		<button onclick="refreshCalendar('prev')">prev</button>
+		<button onclick="refreshCalendar('next')">next</button>
+		<table border="1" id="calendar"></table>
+		
+		<script src="script.js"></script>
+	</body>
+</html>

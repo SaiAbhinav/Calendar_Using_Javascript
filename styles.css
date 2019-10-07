@@ -1,0 +1,16 @@
+.prev_next-month-date {
+	color: red;
+}
+
+.today-date {
+	background-color: green;
+	color: white;
+}
+
+.current-month-date {
+	color: blue;
+}
+
+.refreshed-month-date {
+	color: green;
+}
