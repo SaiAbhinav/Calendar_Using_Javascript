@@ -92,10 +92,15 @@ function getCell(td, count, token) {
 		case "current":
 			if (date.getMonth() == today.getMonth()) {
 				if (count == today.getDate()) {
+					if (today.getDay() == 0) {
+					td.className = "active-holiday-date";
+				}else {
 					td.className = "today-date";
+				}
 				} else {
 					td.className = "current-month-date";
 				}
+				
 			} else {
 				td.className = "refreshed-month-date";
 			}
@@ -110,11 +115,63 @@ function getCell(td, count, token) {
 			break;
 	}
 	
+	if (count == 31) {
+		var container = document.createElement("div");
+		td.classList.add("has-task");
+		container.innerHTML = "1";
+		container.setAttribute("data-remainder", "Apurva's Birthday");
+		td.appendChild(container);
+	}
+	
 	td.addEventListener("click", function() {
+		
+		var els = document.querySelectorAll('.active-date');
+		for (var i = 0; i < els.length; i++) {
+			els[i].classList.remove('active-date')
+		}
+		var els1 = document.querySelectorAll('.active-holiday-date');
+		for (var i = 0; i < els1.length; i++) {
+			els1[i].classList.remove('active-holiday-date')
+		}
+		td.className = "active-date";
+		if (new Date(months[month] + " " + count + " " + date.getFullYear()).getDay() == 0) {
+			td.className = "active-holiday-date";
+		}
 		if (token == "current") {
-			alert(new Date(months[month] + " " + count + " " + date.getFullYear()).toDateString());
+			// alert(new Date(months[month] + " " + count + " " + date.getFullYear()).toDateString());
 		} else {
 			refreshCalendar(token);
+		}
+		if (td.children.length > 0) {
+			td.classList.add("has-task");
+			alert(td.children[0]['dataset']['remainder']);
+		}
+		
+	});
+	
+	td.addEventListener("mouseenter", function() {
+		var els = document.querySelectorAll('.hover-date');
+		for (var i = 0; i < els.length; i++) {
+			els[i].classList.remove('hover-date')
+		}
+		var els1 = document.querySelectorAll('.hover-holiday-date');
+		for (var i = 0; i < els1.length; i++) {
+			els1[i].classList.remove('hover-holiday-date')
+		}
+		td.classList.add("hover-date");
+		if (new Date(months[month] + " " + count + " " + date.getFullYear()).getDay() == 0) {
+			td.classList.add("hover-holiday-date");
+		}
+	});
+	
+	td.addEventListener("mouseleave", function() {
+		var els = document.querySelectorAll('.hover-date');
+		for (var i = 0; i < els.length; i++) {
+			els[i].classList.remove('hover-date')
+		}
+		var els1 = document.querySelectorAll('.hover-holiday-date');
+		for (var i = 0; i < els1.length; i++) {
+			els1[i].classList.remove('hover-holiday-date')
 		}
 	});
 		
@@ -133,8 +190,7 @@ function getWeekDayNames() {
 }
 
 function setHeaders() {
-	document.getElementById("current_month").innerHTML = months[date.getMonth()];
-	document.getElementById("current_date_stamp").innerHTML = date.toDateString();
+	document.getElementById("current_month_year").innerHTML = months[date.getMonth()] + " " + date.getFullYear();
 }
 
 function refreshCalendar(token) {
