@@ -116,15 +116,16 @@ function getCell(td, count, token) {
 	}
 	
 	if (count == 31) {
+		var tasks = "Apurva Birthday, Shopping";
 		var container = document.createElement("div");
 		td.classList.add("has-task");
 		container.innerHTML = "1";
-		container.setAttribute("data-remainder", "Apurva's Birthday");
+		container.setAttribute("data-remainder", tasks);
 		td.appendChild(container);
 	}
 	
 	td.addEventListener("click", function() {
-		
+		document.getElementById("remainders").innerHTML = "";
 		var els = document.querySelectorAll('.active-date');
 		for (var i = 0; i < els.length; i++) {
 			els[i].classList.remove('active-date')
@@ -144,7 +145,9 @@ function getCell(td, count, token) {
 		}
 		if (td.children.length > 0) {
 			td.classList.add("has-task");
-			alert(td.children[0]['dataset']['remainder']);
+			var p = document.createElement("marquee");
+			p.innerHTML = td.children[0]['dataset']['remainder'];
+			document.getElementById("remainders").appendChild(p);
 		}
 		
 	});
