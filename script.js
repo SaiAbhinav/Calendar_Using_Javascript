@@ -8,9 +8,67 @@ var table;
 function renderCalendar() {
 	setHeaders();
 	getCalendar();
+	setInputs();
+}
+
+function setInputs() {
+	var select = document.getElementById("year_dropdown");
+	select.innerHTML = "";
+	var option = document.createElement("option");
+	option.setAttribute("readonly", true);
+	option.innerHTML = "select";
+	select.appendChild(option);
+	for (var i = 2000; i < 2500; i++) {
+		var option = document.createElement("option");
+		option.setAttribute("value", i);
+		option.innerHTML = i;
+		select.appendChild(option);
+		if (i == date.getFullYear()) {
+			option.setAttribute("selected", true);
+		}
+	}
+	
+	var monthSelect = document.getElementById("month_dropdown");
+	monthSelect.innerHTML = "";
+	var option = document.createElement("option");
+	option.setAttribute("readonly", true);
+	option.innerHTML = "select";
+	monthSelect.appendChild(option);
+	for (var i = 0; i < months.length; i++) {
+		var option = document.createElement("option");
+		option.setAttribute("value", i);
+		option.innerHTML = months[i];
+		monthSelect.appendChild(option);
+		if (i == date.getMonth()) {
+			option.setAttribute("selected", true);
+		}
+	}
+}
+
+function setCalendar() {
+	var year = document.getElementById("year_dropdown").value;
+	var month = document.getElementById("month_dropdown").value;
+	date.setFullYear(year);
+	date.setMonth(month);
+	document.getElementById("calendar").innerHTML = "";
+	setInputs();
+	renderCalendar();
+}
+
+function setToday() {
+	var tdy = new Date();
+	document.getElementById("year_dropdown").value = tdy.getFullYear();
+	document.getElementById("month_dropdown").value = tdy.getMonth();
+	setCalendar();
+}
+
+function setTasks() {
+	document.getElementById("remainders").innerHTML = "<p>Select a date to show tasks and remainders</p>";
 }
 
 function getCalendar() {
+	setTasks()
+	
 	var month = date.getMonth();
 	var year = date.getFullYear();
 	
@@ -147,6 +205,10 @@ function getCell(td, count, token) {
 			td.classList.add("has-task");
 			var p = document.createElement("marquee");
 			p.innerHTML = td.children[0]['dataset']['remainder'];
+			document.getElementById("remainders").appendChild(p);
+		} else {
+			var p = document.createElement("marquee");
+			p.innerHTML = "No Tasks";
 			document.getElementById("remainders").appendChild(p);
 		}
 		

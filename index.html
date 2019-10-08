@@ -7,17 +7,26 @@
 	</head>
 	<body onload="renderCalendar()">
 		<div class="wrapper">
-			<div class="header">
-				<div class="details">
-					<h2 id="current_month_year"></h2>
+			<div class="calendar-wrapper">
+				<div class="filters">
+					<select id="year_dropdown" onchange="setCalendar()"></select>
+					<select id="month_dropdown" onchange="setCalendar()"></select>
+					<button onclick="setToday()">Today</button>
 				</div>
-				<button class="control-btn prev" onclick="refreshCalendar('prev')"><i class="fas fa-chevron-left"></i></button>
-				<button class="control-btn next" onclick="refreshCalendar('next')"><i class="fas fa-chevron-right"></i></button>
+				<div class="header">
+					<div class="details">
+						<h2 id="current_month_year"></h2>
+					</div>
+					<button class="control-btn prev" onclick="refreshCalendar('prev')"><i class="fas fa-chevron-left"></i></button>
+					<button class="control-btn next" onclick="refreshCalendar('next')"><i class="fas fa-chevron-right"></i></button>
+				</div>
+				<div class="calendar">
+					<table id="calendar"></table>
+				</div>
 			</div>
-			<div class="calendar">
-				<table id="calendar"></table>
+			<div id="remainders">
+				<p>Select a date to show tasks and remainders</p>
 			</div>
-			<div id="remainders"></div>
 		</div>
 		
 		<script src="script.js"></script>
